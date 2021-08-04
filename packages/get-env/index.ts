@@ -1,4 +1,8 @@
-export const getEnv = (name: string, envObj: any): string | number => {
+import { config } from 'dotenv';
+
+config();
+
+export const getEnv = (name: string, envObj: any): string => {
   const { MODE } = envObj;
 
   const modeIsCorrect = MODE === 'D' || MODE === 'P';

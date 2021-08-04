@@ -1,4 +1,5 @@
 import 'express-async-errors';
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import { internalApiKeyHandler } from '@truckify/internal-api-key-middleware';
@@ -8,22 +9,22 @@ import { jwtDecoder } from '@truckify/jwt-middleware';
 import { env } from './config/env';
 import { routes } from './routes';
 
-export const initApp = () => {
-  const app = express();
+dotenv.config();
 
-  app.use(express.json());
+const app = express();
 
-  app.use(cors());
+app.use(express.json());
 
-  app.use(internalApiKeyHandler(env.internalApiKey));
+app.use(cors());
 
-  app.use(jwtDecoder(env.jwtSecret));
+app.use(internalApiKeyHandler(env.internalApiKey));
 
-  app.use(getRequestUser);
+app.use(jwtDecoder(env.jwtSecret));
 
-  app.use(routes);
+app.use(getRequestUser);
 
-  app.use(errorHandler);
+app.use(routes);
 
-  return app;
-}
+app.use(errorHandler);
+
+export { app }

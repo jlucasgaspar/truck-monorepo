@@ -15,8 +15,11 @@
     "test": "jest --detectOpenHandles --passWithNoTests --silent --noStackTrace --runInBand --coverage",
     "test:verbose": "jest --detectOpenHandles --coverage"
   },
-  "dependencies": {},
+  "dependencies": {
+    "bcrypt": "^5.0.1"
+  },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "nodemon": "^2.0.12",
     "ts-node": "^10.1.0"
   }

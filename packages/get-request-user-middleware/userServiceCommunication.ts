@@ -1,11 +1,8 @@
-import { config } from 'dotenv';
-import { createUserService } from '@truckify/communication-handler/user';
-import { ServicesNames } from '@truckify/services-envs';
+import { createUserService } from '@truckify/services-communication/user';
 
-config();
+const { MODE, D_API_KEY, P_API_KEY } = process.env;
 
 export const userService = createUserService({
-  apiKey: process.env.API_KEY as string,
-  baseUrl: process.env.BASE_URL as string,
-  serviceName: ServicesNames.User
+  apiKey: MODE === 'D' ? D_API_KEY! : P_API_KEY!,
+  mode: MODE!
 })

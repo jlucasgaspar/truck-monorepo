@@ -2,3 +2,4 @@
 
 export * from './loginWithEmailAndPassword';
 export * from './ping';
+export * from './signUpWithEmailAndPassword';

@@ -1,5 +1,6 @@
-import { Service } from '@truckify/services-envs';
+import { Service, ServicesNames } from '@truckify/services-envs';
 
-const { name, port } = Service.base;
-export const serviceName = name;
-export const servicePort = port;
+const { User } = ServicesNames;
+
+export const serviceName = User;
+export const servicePort = Service[serviceName].port;

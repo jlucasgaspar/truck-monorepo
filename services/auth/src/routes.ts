@@ -9,5 +9,15 @@ export const routes = createRouter({
     method: 'GET',
     handler: handlers.pingController,
     schema: Joi.object<void>()
+  },
+
+  loginWithEmailAndPassword: {
+    path: '/internal/login-email',
+    method: 'POST',
+    handler: handlers.loginWithEmailAndPasswordController,
+    schema: Joi.object<Auth.HttpRequest.LoginWithEmailAndPassword>({
+      email: Joi.string().required().email(),
+      password: Joi.string().required()
+    })
   }
 });

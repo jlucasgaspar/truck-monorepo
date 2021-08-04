@@ -1,6 +1,6 @@
-// import { createBaseService } from '@truckify/communication-handler/base';
+import { createBaseService } from '@truckify/services-communication/base';
+import { env } from '../config/env';
 
-// const baseService = createBaseService({
-//   apiKey: '',
-//   baseUrl: ''
-// });
+const { internalApiKey: apiKey, mode } = env;
+
+export const authService = createBaseService({ apiKey, mode });

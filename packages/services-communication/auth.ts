@@ -1,10 +1,10 @@
+import { Service, ServicesNames } from '@truckify/services-envs';
 import { Auth } from '@truckify/services-types/auth';
 import { createAxiosInstance } from './utils/axiosInstance';
 
 type Param = {
   apiKey: string;
-  baseUrl: string;
-  serviceName: string;
+  mode: string
 }
 
 type JwtToken = Auth.Helpers.JwtToken;
@@ -15,7 +15,11 @@ type Response = {
   loginWithEmailAndPassword: (input: LoginWithEmailAndPassword) => Promise<JwtToken>;
 }
 
-export const createAuthService = ({ apiKey, baseUrl, serviceName }: Param): Response => {
+export const createAuthService = ({ apiKey, mode }: Param): Response => {
+  const serviceName = ServicesNames.Auth;
+  const { port } = Service[serviceName];
+  const baseUrl = mode === 'D' ? `http://localhost:${port}` : ''; //! ajeitar esse '';
+
   const { get, post } = createAxiosInstance({ apiKey, baseUrl });
 
   return {

@@ -3,6 +3,8 @@ import { UnauthorizedError } from '@truckify/response-errors';
 import { decodeJwt } from '@truckify/jwt-handler';
 import { jwtSecret } from './secret';
 
+if (!jwtSecret) throw new Error('No jwtSecret found in file ./packages/jwt-middleware/secret.ts');
+
 export const jwtDecoder = (request: Request, response: Response, next: NextFunction) => {
   const isPublic = request.originalUrl.includes('/public/');
   const isInternal = request.originalUrl.includes('/internal/');

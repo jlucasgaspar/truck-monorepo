@@ -19,5 +19,7 @@ export namespace Auth {
 
   export namespace Helpers {
     export type EmailAndPassword = { email: string; password: string; }
+    export type JwtToken = { exp: number; token: string; }
+    export type DecodedJwtToken = { exp: number; sub: string; }
   }
 }

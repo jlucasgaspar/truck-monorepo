@@ -1,8 +1,10 @@
 import 'express-async-errors';
 import express from 'express';
 import cors from 'cors';
-import { internalApiKeyHandler } from '@truckify/internal-api-key-handler';
-import { errorHandler } from '@truckify/error-handler';
+import { internalApiKeyHandler } from '@truckify/internal-api-key-middleware';
+import { getRequestUser } from '@truckify/get-request-user-middleware';
+import { errorHandler } from '@truckify/error-handler-middleware';
+import { jwtDecoder } from '@truckify/jwt-middleware';
 import { serviceName, servicePort } from './utils/serviceInfo';
 import { routes } from './routes';
 
@@ -16,6 +18,8 @@ export const initApp = () => {
   app.use(
     basePath,
     internalApiKeyHandler,
+    jwtDecoder,
+    getRequestUser,
     routes,
     errorHandler
   );

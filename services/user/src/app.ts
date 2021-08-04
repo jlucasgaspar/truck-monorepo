@@ -1,5 +1,4 @@
 import 'express-async-errors';
-import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import { internalApiKeyHandler } from '@truckify/internal-api-key-middleware';
@@ -8,8 +7,6 @@ import { errorHandler } from '@truckify/error-handler-middleware';
 import { jwtDecoder } from '@truckify/jwt-middleware';
 import { env } from './config/env';
 import { routes } from './routes';
-
-dotenv.config();
 
 const app = express();
 

@@ -1,4 +1,7 @@
+import dotenv from 'dotenv';
 import { getEnv } from '../utils/getEnv';
+
+dotenv.config();
 
 const myEnv = process.env;
 

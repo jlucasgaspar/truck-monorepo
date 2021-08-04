@@ -13,6 +13,7 @@
     "m:rollback": "npx knex migrate:rollback",
     "m:status": "npx knex migrate:status",
     "test": "jest --detectOpenHandles --passWithNoTests --silent --noStackTrace --runInBand --coverage",
+    "test:watch": "npm run test --watch",
     "test:verbose": "jest --detectOpenHandles --coverage"
   },
   "dependencies": {

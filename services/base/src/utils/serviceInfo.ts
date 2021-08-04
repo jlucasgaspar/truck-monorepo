@@ -1,6 +1,6 @@
 import { Service, ServicesNames } from '@truckify/services-envs';
 
-const { User } = ServicesNames;
+const service = ServicesNames.Base;
 
-export const serviceName = User;
+export const serviceName = service;
 export const servicePort = Service[serviceName].port;

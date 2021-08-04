@@ -22,7 +22,7 @@ export const createAuthService = ({ apiKey, baseUrl, serviceName }: Param): Resp
     ping: async () => {
       await get(`/public/${serviceName}/ping`)
     },
-    
+
     loginWithEmailAndPassword: async (input: LoginWithEmailAndPassword): Promise<JwtToken> => {
       const response = await post(`/internal/${serviceName}/login-email`, input)
       return response.data;

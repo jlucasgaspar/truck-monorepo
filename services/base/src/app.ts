@@ -7,18 +7,16 @@ import { errorHandler } from '@truckify/error-handler-middleware';
 import { jwtDecoder } from '@truckify/jwt-middleware';
 import { serviceName, servicePort } from './utils/serviceInfo';
 import { routes } from './routes';
+import { env } from './config/env';
 
 export const initApp = () => {
-  const basePath = `/${serviceName}`;
-
   const app = express();
 
   app.use(express.json(), cors());
 
   app.use(
-    basePath,
-    internalApiKeyHandler,
-    jwtDecoder,
+    internalApiKeyHandler(env.internalApiKey),
+    jwtDecoder(env.jwtSecret),
     getRequestUser,
     routes,
     errorHandler

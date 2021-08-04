@@ -13,7 +13,7 @@ export const routes = createRouter({
   },
 
   getUserById: {
-    path: `/internal/${serviceName}/:userId`,
+    path: `/internal/${serviceName}/byId/:userId`,
     method: 'GET',
     handler: handlers.pingController,
     schema: Joi.object<void>()

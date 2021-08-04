@@ -22,12 +22,14 @@ export namespace User {
     export type Create = Model.WithoutDatesAndId;
     export type Update = Partial<Model.WithoutDatesAndId> & { id: string; };
     export type GetById = { id: string; }
+    export type GetByEmail = { email: string; }
   }
 
   export namespace Core {
     export type Create = HttpRequest.Create;
     export type Update = HttpRequest.Update;
     export type GetById = HttpRequest.GetById;
+    export type GetByEmail = HttpRequest.GetByEmail;
   }
 
   export namespace Database {

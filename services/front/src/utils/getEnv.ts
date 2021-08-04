@@ -1,7 +1,3 @@
-import { config } from 'dotenv';
-
-config();
-
 export const getEnv = (name: string, envObj: any): string => {
   const { MODE } = envObj;
 

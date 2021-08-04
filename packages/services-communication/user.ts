@@ -9,10 +9,12 @@ type Param = {
 
 type Model = User.Model.Complete;
 type GetUserById = User.HttpRequest.GetById;
+type GetByEmail = User.HttpRequest.GetByEmail;
 
 type Response = {
   ping: () => Promise<any>;
   getUserById: (input: GetUserById) => Promise<Model | undefined>;
+  getUserByEmail: (input: GetByEmail) => Promise<Model | undefined>;
 }
 
 export const createUserService = ({ apiKey, mode }: Param): Response => {
@@ -26,7 +28,12 @@ export const createUserService = ({ apiKey, mode }: Param): Response => {
     ping: async () => await get(`/public/${serviceName}/ping`),
 
     getUserById: async ({ id }: GetUserById): Promise<Model | undefined> => {
-      const result = await get(`/internal/${serviceName}/${id}`)
+      const result = await get(`/internal/${serviceName}/byId/${id}`)
+      return result.data;
+    },
+
+    getUserByEmail: async ({ email }: GetByEmail): Promise<Model | undefined> => {
+      const result = await get(`/internal/${serviceName}/byEmail/${email}`)
       return result.data;
     }
   }

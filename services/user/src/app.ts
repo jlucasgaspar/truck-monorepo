@@ -9,14 +9,11 @@ import { serviceName, servicePort } from './utils/serviceInfo';
 import { routes } from './routes';
 
 export const initApp = () => {
-  const basePath = `/${serviceName}`;
-
   const app = express();
 
   app.use(express.json(), cors());
 
   app.use(
-    basePath,
     internalApiKeyHandler,
     jwtDecoder,
     getRequestUser,

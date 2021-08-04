@@ -1,18 +1,29 @@
-import { Auth } from '@truckify/services-types/auth';
-import { createAxiosInstance, Param, Output } from './utils/axiosInstance';
+import { User } from '@truckify/services-types/user';
+import { createAxiosInstance } from './utils/axiosInstance';
 
-type LoginWithEmailAndPassword = Auth.HttpRequest.LoginWithEmailAndPassword;
-
-type Response = {
-  ping: () => Output<string>;
-  getUserById: (input: LoginWithEmailAndPassword) => Output<any>;
+type Param = {
+  apiKey: string;
+  baseUrl: string;
+  serviceName: string;
 }
 
-export const createAuthService = ({ apiKey, baseUrl, serviceName }: Param): Response => {
-  const { get, post } = createAxiosInstance({ apiKey, baseUrl, serviceName });
+type Model = User.Model.Complete;
+type GetUserById = User.HttpRequest.GetById;
+
+type Response = {
+  ping: () => Promise<any>;
+  getUserById: (input: GetUserById) => Promise<Model | undefined>;
+}
+
+export const createUserService = ({ apiKey, baseUrl, serviceName }: Param): Response => {
+  const { get } = createAxiosInstance({ apiKey, baseUrl });
 
   return {
-    ping: async () => await get('/public/ping'),
-    getUserById: async (input: LoginWithEmailAndPassword) => await post('/internal/login-email', input)
+    ping: async () => await get(`/public/${serviceName}/ping`),
+
+    getUserById: async ({ id }: GetUserById): Promise<Model | undefined> => {
+      const result = await get(`/internal/${serviceName}/${id}`)
+      return result.data;
+    }
   }
 }

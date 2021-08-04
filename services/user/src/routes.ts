@@ -5,7 +5,14 @@ import * as handlers from './controllers';
 
 export const routes = createRouter({
   ping: {
-    path: '/public/ping',
+    path: '/public/user/ping',
+    method: 'GET',
+    handler: handlers.pingController,
+    schema: Joi.object<void>()
+  },
+
+  getUserById: {
+    path: '/internal/user/:userId',
     method: 'GET',
     handler: handlers.pingController,
     schema: Joi.object<void>()

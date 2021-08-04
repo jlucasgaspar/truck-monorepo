@@ -1,15 +1,12 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 
-export type Param = {
+type Param = {
   apiKey: string;
   baseUrl: string;
-  serviceName: string;
 }
 
-export type Output <T> = Promise<AxiosResponse<T>>;
-
-export const createAxiosInstance = ({ apiKey, baseUrl, serviceName }: Param) => axios.create({
-  baseURL: `${baseUrl}/${serviceName}`,
+export const createAxiosInstance = ({ apiKey, baseUrl }: Param) => axios.create({
+  baseURL: baseUrl,
   headers: {
     'Internal-Api-Key': apiKey
   }

@@ -21,11 +21,13 @@ export namespace User {
   export namespace HttpRequest {
     export type Create = Model.WithoutDatesAndId;
     export type Update = Partial<Model.WithoutDatesAndId> & { id: string; };
+    export type GetById = { id: string; }
   }
 
   export namespace Core {
     export type Create = HttpRequest.Create;
     export type Update = HttpRequest.Update;
+    export type GetById = HttpRequest.GetById;
   }
 
   export namespace Database {

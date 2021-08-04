@@ -1,9 +1,20 @@
+import { config } from 'dotenv';
 import { Request, Response, NextFunction } from 'express';
 import { UnauthorizedError } from '@truckify/response-errors';
 import { decodeJwt } from '@truckify/jwt-handler';
-import { jwtSecret } from './secret';
+import { User } from '@truckify/services-types/user';
 
-if (!jwtSecret) throw new Error('No jwtSecret found in file ./packages/jwt-middleware/secret.ts');
+config();
+
+if (!process.env.JWT_SECRET) throw new Error('No process.env.JWT_SECRET found');
+
+declare global {
+  namespace Express {
+    interface Request {
+      user: User.Model.Complete;
+    }
+  }
+}
 
 export const jwtDecoder = (request: Request, response: Response, next: NextFunction) => {
   const isPublic = request.originalUrl.includes('/public/');
@@ -20,7 +31,7 @@ export const jwtDecoder = (request: Request, response: Response, next: NextFunct
 
   const jwtToken = authorization.replace('Bearer', '').trim();
 
-  const verifiedToken = decodeJwt(jwtToken, jwtSecret);
+  const verifiedToken = decodeJwt(jwtToken, process.env.JWT_SECRET as string);
   if (!verifiedToken) {
     throw new UnauthorizedError('Token inválido');
   }
@@ -30,6 +41,8 @@ export const jwtDecoder = (request: Request, response: Response, next: NextFunct
   if (!isRefreshTokenUrl && tokenIsExpired) {
     throw new UnauthorizedError('Token expirado');
   }
+
+  request.user = verifiedToken.sub as User.Model.Complete;
 
   return next();
 }

@@ -1,13 +1,19 @@
-import { createAxiosInstance, Param, Output } from './utils/axiosInstance';
+import { createAxiosInstance } from './utils/axiosInstance';
+
+type Param = {
+  apiKey: string;
+  baseUrl: string;
+  serviceName: string;
+}
 
 type Response = {
-  ping: () => Output<string>;
+  ping: () => Promise<any>;
 }
 
 export const createBaseService = ({ apiKey, baseUrl, serviceName }: Param): Response => {
-  const api = createAxiosInstance({ apiKey, baseUrl, serviceName });
+  const api = createAxiosInstance({ apiKey, baseUrl });
 
   return {
-    ping: async () => await api.get('/ping')
+    ping: async () => await api.get(`/public/${serviceName}/ping`)
   }
 }

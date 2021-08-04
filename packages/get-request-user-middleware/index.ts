@@ -1,6 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-// import { findUserById } from '@user/services/repository';
 import { BadRequestError } from '@truckify/response-errors';
+import { userService } from './userServiceCommunication';
+import { User } from '@truckify/services-types/user';
+
+declare global {
+  namespace Express {
+    interface Request {
+      user: User.Model.Complete;
+    }
+  }
+}
 
 export const getRequestUser = async (request: Request, response: Response, next: NextFunction) => {
   const isPublic = request.originalUrl.includes('/public/');
@@ -10,14 +19,15 @@ export const getRequestUser = async (request: Request, response: Response, next:
     return next();
   }
 
-  // const { id } = request.user!;
+  const { id } = request.user!;
 
-  // const user = await findUserById(id);
-  // if (!user) {
-  //   throw new BadRequestError('Erro ao buscar o usuário referente a essa requisição.');
-  // }
+  const user = await userService.getUserById({ id });
 
-  // request.user = user;
+  if (!user) {
+    throw new BadRequestError('Erro ao buscar o usuário referente a essa requisição.');
+  }
+
+  request.user = user;
 
   return next();
 }

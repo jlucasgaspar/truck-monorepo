@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import { Joi } from 'celebrate';
 import { createRouter } from '@truckify/router-handler';
 import { Auth } from '@truckify/services-types/auth';
 import { serviceName } from './utils/serviceInfo';
